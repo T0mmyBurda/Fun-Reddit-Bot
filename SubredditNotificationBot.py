@@ -1,3 +1,6 @@
+#This program will periodically check new posts of a subreddit then notify your desktop
+#if any of the entered keywords are present in the post title
+
 import praw
 import os
 import time
@@ -18,16 +21,32 @@ def notify(title, text):
               """.format(text, title))
 
 
-def search(subName , searchTerms):
+def search(subName , searchTerms , last):
+
+    newLast = ""
+    firstLoop = True
     for submission in reddit.subreddit(subName).new(limit=10):
+        if(firstLoop):
+            newLast = submission
+        if(submission == last):
+            print("foundLast" , "   " , newLast)
+            return newLast
         for term in searchTerms:
-            if(term in submission.title):
-                notify("CAM_BOT", term + "mentioned in " + subName)
+            if(term in submission.title.lower()):
+                notify("CAM_BOT", term + " mentioned in " + subName)
+        prev = submission
+    last = submission
+
+    return last
+    
 
 
 subName = "marist"
-searchTerms = ["rowing" , "crew" , "covid"]
+searchTerms = ["rowing" , "crew" , "COVID"]
+checkInterval = 60
+last = ""
 
 while (True):
-    search(subName , searchTerms)
-    time.sleep(60)
+    last = search(subName , searchTerms , last)
+    print("LAST: " , last)
+    time.sleep(checkInterval)
