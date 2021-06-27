@@ -4,7 +4,7 @@
  All code needs login info which is found in a file named <code>SecretStuff.txt</code> (not included in repo)
 * see example SecretStuff file to see format
 
-## List of bots
+## List of bots:
 
 ### <code>SubredditNotificationBot</code>
 * Bot that will periodically check new posts of a subreddit then notify your desktop if any of the entered keywords are present in the post title
