@@ -1,3 +1,4 @@
+import datetime
 from PIL import Image
 
 
@@ -6,8 +7,10 @@ def isEmpacher(imgPath):
     gAvg = 205
     bAvg = 125
 
-    thresh = .01
-    leeway = 25
+    thresh = .002
+    leeway = 35
+    #25 -- 0.0026373519414204637
+    #40 -- 0.010268639283628577
     empPix = 0
 
     img = Image.open(imgPath)
@@ -18,7 +21,7 @@ def isEmpacher(imgPath):
 
     examp = pixels[0 , 0]
     r = examp[0]
-    print("HERE")
+    print(examp)
     print(abs(r - rAvg))
 
     # print(examp)
@@ -33,12 +36,18 @@ def isEmpacher(imgPath):
 
             if(abs(r - rAvg) < leeway and abs(g - gAvg) < leeway and abs(b - bAvg) < leeway):
                 empPix += 1
+                pixels[x , y] = (245, 75, 66, 255)
 
     print(empPix)
     print(imgX * imgY)
-    return (empPix / (imgX * imgY))
+
+    time = datetime.datetime.now()
+    stringTime = time.strftime("%m-%d %H:%M")
+    
+    img.save("EmpacherTestImagesResults/test4--" + stringTime + ".png")
+    return (empPix / (imgX * imgY) < thresh)
             
 
-output = isEmpacher("EmpacherTestImages/test1.png")
+output = isEmpacher("EmpacherTestImages/test4.png")
 
-#print(output)
+print(output)

@@ -1,5 +1,6 @@
 SecretStuff.txt
 EmpacherTestImages/
+EmpacherTestImagesResults/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
