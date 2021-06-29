@@ -27,7 +27,7 @@ def notify(title, text):
 
 def searchSubreddit():#(subName , searchTerms , last):
 
-    for submission in reddit.subreddit("rowing").new(limit=1000):
+    for submission in reddit.subreddit("rowing").new(limit=):
 
         url = str(submission.url)
 
@@ -36,13 +36,16 @@ def searchSubreddit():#(subName , searchTerms , last):
             print("image found")
 
             path = "EmpacherImagesTemp/image" + str(submission)
-            print(path)
+            print(str(submission.title))
             if(isEmpacher(path , str(submission))):
-                #submission.reply("Is that a yellow WinTech?")
+                submission.reply("Is that a yellow WinTech?")
                 #notify("CAM_BOT", "Empacher found at " + url)
                 print("empacher found\n")
             else:
                 print("no empacher\n")
+        else:
+            print(str(submission.title))
+            print()
 
 
 
@@ -61,7 +64,7 @@ def isEmpacher(imgPath , subID):
     bAvg = 125
 
     thresh = .009
-    leeway = 20
+    leeway = 25
     empPix = 0
 
     img = Image.open(imgPath)
@@ -71,11 +74,6 @@ def isEmpacher(imgPath , subID):
 
     imgX = img.size[0]
     imgY = img.size[1]
-
-    # examp = pixels[0 , 0]
-    # r = examp[0]
-    # print(examp)
-    # print(abs(r - rAvg))
     
     for x in range(0 , imgX):
         for y in range(0 , imgY):

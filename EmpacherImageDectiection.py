@@ -8,7 +8,7 @@ def isEmpacher(imgPath):
     bAvg = 125
 
     thresh = .002
-    leeway = 35
+    leeway = 25
     #25 -- 0.0026373519414204637
     #40 -- 0.010268639283628577
     empPix = 0
@@ -46,11 +46,11 @@ def isEmpacher(imgPath):
     time = datetime.datetime.now()
     stringTime = time.strftime("%m-%d %H:%M")
     
-    img.save("EmpacherTestImagesResults/test4--" + stringTime + ".png")
+    img.save("EmpacherTestImagesResults/test5--" + stringTime + ".png")
     
     return (empPix / (imgX * imgY) > thresh)
             
 
-output = isEmpacher("EmpacherTestImages/test4.png")
+output = isEmpacher("EmpacherTestImages/test5.png")
 
 print(output)
