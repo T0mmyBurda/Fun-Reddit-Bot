@@ -27,7 +27,7 @@ def notify(title, text):
 
 def searchSubreddit():#(subName , searchTerms , last):
 
-    for submission in reddit.subreddit("rowing").new(limit=200):
+    for submission in reddit.subreddit("rowing").new(limit=1000):
 
         url = str(submission.url)
 
@@ -38,7 +38,7 @@ def searchSubreddit():#(subName , searchTerms , last):
             path = "EmpacherImagesTemp/image" + str(submission)
             print(path)
             if(isEmpacher(path , str(submission))):
-                submission.reply("Is that a yellow WinTech?")
+                #submission.reply("Is that a yellow WinTech?")
                 #notify("CAM_BOT", "Empacher found at " + url)
                 print("empacher found\n")
             else:
@@ -60,21 +60,22 @@ def isEmpacher(imgPath , subID):
     gAvg = 205
     bAvg = 125
 
-    thresh = .006
-    leeway = 25
+    thresh = .009
+    leeway = 20
     empPix = 0
 
     img = Image.open(imgPath)
+    #ogImg = img
     #ImageShow.show(img , imgPath)
     pixels = img.load()
 
     imgX = img.size[0]
     imgY = img.size[1]
 
-    examp = pixels[0 , 0]
-    r = examp[0]
-    print(examp)
-    print(abs(r - rAvg))
+    # examp = pixels[0 , 0]
+    # r = examp[0]
+    # print(examp)
+    # print(abs(r - rAvg))
     
     for x in range(0 , imgX):
         for y in range(0 , imgY):
@@ -85,16 +86,25 @@ def isEmpacher(imgPath , subID):
 
             if(abs(r - rAvg) < leeway and abs(g - gAvg) < leeway and abs(b - bAvg) < leeway):
                 empPix += 1
-                pixels[x , y] = (245, 75, 66, 255)
+                pixDiff =  abs(r - rAvg) + abs(g - gAvg) + abs(b - bAvg)
+                if(pixDiff <= 15):
+                    pixels[x , y] = (245, 75, 66, 255)
+                elif(pixDiff <= 30):
+                    pixels[x , y] = (255, 140, 0, 255)
+                else:
+                    pixels[x , y] = (255, 247, 0, 255)
 
-    print(empPix)
-    print(imgX * imgY)
+    # print(empPix)
+    # print(imgX * imgY)
+    print(empPix / (imgX * imgY))
 
     time = datetime.datetime.now()
     stringTime = time.strftime("%m-%d %H:%M")
     
     if(empPix / (imgX * imgY) > thresh):
-        img.save("EmpacherTestImagesResults/" + subID + "::" + str(empPix / (imgX * imgY)) + ".png")
+        img.save("EmpacherTestImagesResults/" + subID + "::" + str(round(empPix / (imgX * imgY) , 4)) + ".png")
+        #ogImg.save("EmpacherImagesUnmarked/" + subID + "::" + str(empPix / (imgX * imgY)) + ".png")
+        #EmpacherImagesUnmarked
 
     return (empPix / (imgX * imgY) > thresh)
     

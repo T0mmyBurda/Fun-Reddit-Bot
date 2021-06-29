@@ -47,7 +47,8 @@ def isEmpacher(imgPath):
     stringTime = time.strftime("%m-%d %H:%M")
     
     img.save("EmpacherTestImagesResults/test4--" + stringTime + ".png")
-    return (empPix / (imgX * imgY) < thresh)
+    
+    return (empPix / (imgX * imgY) > thresh)
             
 
 output = isEmpacher("EmpacherTestImages/test4.png")

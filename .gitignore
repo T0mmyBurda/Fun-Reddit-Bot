@@ -2,6 +2,7 @@ SecretStuff.txt
 EmpacherTestImages/
 EmpacherTestImagesResults/
 EmpacherImagesTemp/
+EmpacherImagesUnmarked/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
