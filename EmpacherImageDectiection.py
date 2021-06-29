@@ -38,8 +38,10 @@ def isEmpacher(imgPath):
                 empPix += 1
                 pixels[x , y] = (245, 75, 66, 255)
 
-    print(empPix)
-    print(imgX * imgY)
+    # print(empPix)
+    # print(imgX * imgY)
+    print(empPix / (imgX * imgY))
+    print((empPix / (imgX * imgY) > thresh))
 
     time = datetime.datetime.now()
     stringTime = time.strftime("%m-%d %H:%M")
